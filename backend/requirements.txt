@@ -1,0 +1,62 @@
+# Core Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Database
+sqlalchemy==2.0.25
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Task Queue
+redis==5.0.1
+rq==1.15.1
+
+# LLM & AI
+google-generativeai==0.8.3
+groq==0.11.0  # Backup/fallback LLM
+
+# Embeddings & Vector DB
+sentence-transformers==2.3.1
+qdrant-client==1.7.3
+
+# Web Search & Scraping
+requests==2.31.0
+beautifulsoup4==4.12.3
+html2text==2020.1.16
+
+# TTS
+# Chatterbox will be set up separately via Docker
+
+# Audio Processing
+pydub==0.25.1
+gTTS==2.5.0  # Google Text-to-Speech (Phase 0 - fallback)
+ffmpeg-python==0.2.0  # For audio manipulation
+
+# Maya1 TTS (Phase 0.5 - Primary)
+gradio-client==1.13.3  # Gradio client for Maya1 Space
+soundfile==0.12.1  # Audio file I/O
+huggingface-hub==0.20.0  # For HuggingFace API
+
+# Utilities
+python-dotenv==1.0.0
+httpx==0.26.0
+python-multipart==0.0.6
+aiofiles==23.2.1
+
+# PDF Processing (MVP_0)
+pdfplumber==0.11.0
+PyPDF2==3.0.1
+
+# Monitoring & Logging
+structlog==24.1.0
+
+# Testing
+pytest==7.4.4
+pytest-asyncio==0.23.3
+
+# Notebooks
+jupyter==1.0.0
+ipykernel==6.29.0
+notebook==7.0.7
