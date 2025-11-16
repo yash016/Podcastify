@@ -1,4 +1,4 @@
-# Podcastify MVP_0 - 12-Hour Hackathon Build
+# Podcastify Hackathon Build
 
 > Interactive learning podcasts that beat Google NotebookLM with research-backed learning science
 
