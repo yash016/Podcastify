@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.core.logging_config import setup_logging, get_logger
-from app.api.endpoints import outline, episode, health, generate, upload
+from app.api.endpoints import outline, episode, health, generate, upload, quiz
 
 # Set up logging
 setup_logging()
@@ -40,6 +40,7 @@ app.include_router(outline.router, prefix="/api/v1", tags=["outline"])
 app.include_router(episode.router, prefix="/api/v1", tags=["episode"])
 app.include_router(upload.router, prefix="/api", tags=["upload"])  # MVP_0 upload endpoint
 app.include_router(generate.router, prefix="/api", tags=["generate"])  # V1 MVP endpoint
+app.include_router(quiz.router, prefix="/api", tags=["quiz"])  # Interactive quiz with learning mode
 
 # Mount static files (serve index.html)
 app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")

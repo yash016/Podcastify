@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.backup
+.env.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data and runtime files
+data/
+*.db
+*.sqlite
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+test_*.py
+*_test.py
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+
+# Documentation (keeping only essential)
+TTS_UPGRADE_GUIDE.md
+PARLER_VOICE_GUIDE.md
+XTTS_VS_CHATTERBOX.md
