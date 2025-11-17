@@ -1,264 +1,362 @@
-# Podcastify Hackathon Build
+# Podcastify
 
-> Interactive learning podcasts that beat Google NotebookLM with research-backed learning science
+> Building on NotebookLM's Audio Overview with interactive learning features
 
-**Timeline**: 12 hours (hackathon_mvp_0)
-**Goal**: Build a fully working prototype with interactive features NotebookLM lacks
-
----
-
-## What is This?
-
-This is a **self-contained MVP_0 implementation** of Podcastify, focused on building the core interactive learning features in 12 hours.
-
-### Why MVP_0 Beats NotebookLM
-
-| Feature | NotebookLM | Podcastify MVP_0 |
-|---------|-----------|------------------|
-| **Interactivity** | ❌ Passive audio only | ✅ Concept navigation, quizzes |
-| **Visual Learning** | ❌ Audio-only | ✅ Dual coding (coming in MVP_1) |
-| **Testing Understanding** | ❌ No quizzes | ✅ Retrieval practice quizzes |
-| **Concept Navigation** | ❌ Linear playback only | ✅ Click concepts → jump to timestamp |
-| **Learning Science** | ❌ None applied | ✅ Research-backed (6 principles) |
-
-**Research Backing**:
-- Active learning: 93.5% retention vs 79% passive (VanLehn 2011)
-- Retrieval practice: 54% improvement in long-term retention (Roediger 2011)
-- Dual coding: 89% better recall than single-mode (Paivio 1990)
+Transform your study materials into engaging two-person conversational podcasts with concept graphs, synchronized transcripts, and Socratic quizzes.
 
 ---
 
-## Quick Start (5 minutes)
+## 🎯 What is Podcastify?
+
+Podcastify replicates Google's NotebookLM Audio Overview feature and enhances it with research-backed active learning tools:
+
+- **Audio Overview**: Natural two-person dialogue generated from your documents
+- **Concept Maps**: Interactive D3.js graph showing relationships between key ideas
+- **Synchronized Transcript**: Auto-highlighted dialogue that follows along with audio
+- **Socratic Quizzes**: Wrong-answer analysis with guided questioning (not just hints)
+- **Chapter Navigation**: Jump to specific sections with timestamps
+
+### Why Podcastify?
+
+| Feature | NotebookLM | Podcastify |
+|---------|-----------|------------|
+| **Audio Generation** | ✅ Two-person dialogue | ✅ Two-person dialogue |
+| **Concept Visualization** | ❌ | ✅ Interactive graph |
+| **Quiz System** | ❌ | ✅ Socratic questioning |
+| **Transcript** | ❌ | ✅ Synchronized highlighting |
+| **Chapter Navigation** | ❌ | ✅ Section-based jumping |
+
+**Learning Science**: Active learning with retrieval practice shows 93.5% retention vs 79% passive listening (VanLehn 2011)
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
 - Python 3.11+
-- Gemini API key (get free at https://makersuite.google.com/app/apikey)
+- [Gemini API key](https://makersuite.google.com/app/apikey) (free tier available)
+- [Parler TTS API](https://github.com/collabora/chatterbox-tts-api) (via ngrok or local)
 
 ### Setup
 
-1. **Navigate to backend**:
+1. **Clone and navigate**:
    ```bash
-   cd backend
+   git clone https://github.com/yash016/Podcastify.git
+   cd Podcastify/backend
    ```
 
-2. **Create virtual environment**:
+2. **Create environment**:
    ```bash
    python -m venv venv
    source venv/bin/activate  # Windows: venv\Scripts\activate
-   ```
-
-3. **Install dependencies**:
-   ```bash
    pip install -r requirements.txt
    ```
 
-4. **Configure API keys**:
+3. **Configure environment**:
    ```bash
    cp .env.example .env
-   # Edit .env and add your GEMINI_API_KEY
    ```
 
-5. **Run the server**:
+   Edit `.env`:
    ```bash
-   python -m app.main
+   GEMINI_API_KEY=your_key_here
+   PARLER_TTS_URL=your_chatterbox_ngrok_url
    ```
 
-6. **Open in browser**:
+4. **Run server**:
+   ```bash
+   uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
    ```
-   http://localhost:8000
+
+5. **Open browser**:
+   ```
+   http://localhost:8001
    ```
 
 ---
 
-## MVP_0 Features (12 Hours)
+## 📚 Features
 
-### ✅ Core Features
+### 1. Document Upload
+- Upload PDFs or text files
+- Paste content directly
+- Session-based processing (no database required)
 
-1. **Document Upload & Processing** (90 min)
-   - Accept PDF, text files, or paste content
-   - Extract text and prepare for podcast generation
+### 2. Podcast Generation
+- Two-person conversational dialogue
+- Natural voice synthesis with Parler TTS
+- Concept-based section organization
+- Configurable duration (1-3 minutes for testing, expandable)
 
-2. **Learning Science-Enhanced Dialogue** (120 min)
-   - Brainy & Snarky personalities
-   - Retrieval practice "pause and predict" moments
-   - Concept markers for navigation
+### 3. Interactive Concept Graph
+- D3.js force-directed layout
+- Click concepts to jump to timestamps
+- Visual relationship mapping
+- Importance-based node sizing
 
-3. **Interactive Concept Graph** (150 min)
-   - Visual network of key concepts (D3.js)
-   - Click concept → jump to timestamp in audio
-   - Track which concepts have been covered
+### 4. Synchronized Transcript
+- Auto-scrolling dialogue display
+- Current sentence highlighting
+- Speaker identification
+- Clickable lines for navigation
 
-4. **Enhanced Audio Player with Analytics** (90 min)
-   - Engagement tracking (play, pause, rewind, speed)
-   - **Struggle detection**: Identify wheel-spinning vs productive struggle
-   - Adaptive recommendations
+### 5. Chapter Navigation
+- Outline-based section markers
+- Timestamp-based chapter jumping
+- Concept count per section
+- Duration tracking
 
-5. **Live Transcript with Auto-Highlighting** (75 min)
-   - Real-time transcript display
-   - Auto-scroll and highlight current sentence
-   - Clickable to jump to specific moments
-
-6. **Retrieval Practice Quiz System** (150 min)
-   - Post-episode quizzes with 5-7 questions
-   - Immediate feedback with misconception correction
-   - Link wrong answers → relevant timestamp
-
-### ❌ Explicitly NOT in MVP_0
-
-Saving for MVP_1 or later:
-- Visual dual coding (concept images)
-- 3-part episode series (scaffolding)
-- Spaced repetition
-- User accounts/database
-- Mobile app
-- Advanced graph layouts
+### 6. Socratic Quiz System
+- 5 multiple-choice questions per podcast
+- **Dynamic hint generation** that analyzes YOUR specific wrong answer
+- 3-level graduated hints (subtle → moderate → explicit)
+- Wrong answer reasoning with guiding questions
+- Question navigation (previous/next)
+- Progress tracking
 
 ---
 
-## Project Structure
+## 🏗️ Architecture
+
+### Tech Stack
+
+**Backend**:
+- FastAPI (async Python web framework)
+- Google Gemini 2.5 Flash (LLM for outline, dialogue, concepts, quizzes)
+- Parler TTS via Chatterbox API (audio generation)
+- PyPDF2 (document parsing)
+
+**Frontend**:
+- Vanilla HTML/CSS/JavaScript
+- D3.js (concept graph visualization)
+- FilePond (document upload)
+- HTML5 Audio API (playback control)
+
+**Infrastructure**:
+- Session-based architecture (no database)
+- Local file storage for audio
+- Async processing for speed
+
+### Project Structure
 
 ```
-podcastify_mvp_0/
+Podcastify/
 ├── backend/
 │   ├── app/
-│   │   ├── api/endpoints/     # FastAPI routes
-│   │   ├── core/              # Config, logging
-│   │   ├── services/          # LLM, TTS services
-│   │   ├── models/            # Pydantic schemas
-│   │   ├── static/            # Web UI (index.html)
-│   │   └── main.py            # FastAPI app
+│   │   ├── api/
+│   │   │   └── endpoints/
+│   │   │       ├── upload.py          # Document upload
+│   │   │       ├── generate.py        # Podcast generation
+│   │   │       └── quiz.py            # Quiz system
+│   │   ├── services/
+│   │   │   ├── llm.py                 # Gemini integration
+│   │   │   ├── tts_unified.py         # Parler TTS client
+│   │   │   ├── concept_extractor.py   # Concept extraction
+│   │   │   ├── quiz_generator.py      # Quiz generation
+│   │   │   └── socratic_hint_generator.py  # Dynamic hints
+│   │   ├── models/
+│   │   │   ├── schemas.py             # Pydantic models
+│   │   │   └── quiz_session.py        # Quiz state
+│   │   ├── static/
+│   │   │   ├── index.html             # Landing page
+│   │   │   └── generate.html          # Podcast player
+│   │   └── main.py                    # FastAPI app
 │   ├── requirements.txt
-│   └── .env.example
-├── prompts/
-│   ├── dialogue_generation.md  # Brainy/Snarky dialogue
-│   ├── outline_generation.md   # Episode structure
-│   └── research_compression.md # RAG (not used in MVP_0)
-├── data/
-│   └── audio/                  # Generated podcast files
-├── docs/
-│   ├── HACKATHON_STRATEGY_FINAL.md
-│   ├── LEARNING_SCIENCE_CROSSREFERENCE.md
-│   ├── PROJECT_VISION.md
-│   └── ZPD_ADAPTIVE_LEARNING_PRINCIPLES.md
-└── README.md                   # This file
+│   └── docker-compose.yml
+└── README.md
 ```
 
 ---
 
-## Demo Script (3-4 minutes)
+## 🎮 Demo Flow
 
-**Perfect demo flow for judges**:
-
-1. **Upload** "Photosynthesis.pdf" (5 pages)
+1. **Upload** a PDF or paste text (e.g., "Are We Living In A Simulation.pdf")
 2. **Click** "Generate Learning Podcast"
-3. **See** interactive concept graph (10 concepts: Chlorophyll, Light Reactions, etc.)
-4. **Play** audio - Brainy explains, Snarky questions
-5. **Pause moment** at 1:15 - "Before we continue, what do YOU think happens next?"
-6. **Click** "Chlorophyll" in graph → audio jumps to 0:45 where it's discussed
-7. **Transcript** auto-scrolls, highlights current sentence
-8. **Rewind** same section 3x → "This seems challenging, need help?" notification
-9. **Quiz** appears after podcast ends (5 questions)
-10. **Answer** question → immediate feedback ("Not quite - LSTMs don't use bigger gradients, they preserve them. Replay at 1:23?")
-11. **Results** → "4/5 - Excellent! You've mastered 8/10 concepts"
+3. **Watch** concept graph build (10+ concepts extracted)
+4. **Listen** to two-person dialogue discussing key ideas
+5. **See** transcript auto-scroll and highlight current dialogue
+6. **Click** a concept in the graph → audio jumps to that timestamp
+7. **Navigate** using chapter markers in the Outline section
+8. **Answer** quiz questions after listening
+9. **Get wrong answer?** → See Socratic hints analyzing YOUR specific choice
+10. **Click hint levels** (💡 Level 1, 🔍 Level 2, 📖 Level 3) for more guidance
+11. **Navigate questions** with Previous/Next buttons
 
 ---
 
-## Tech Stack
+## 🧠 Learning Science
 
-- **Backend**: FastAPI (Python 3.11+)
-- **LLM**: Gemini 2.0 Flash (free tier!)
-- **TTS**: Chatterbox (HuggingFace Gradio client)
-- **Frontend**: Vanilla HTML/CSS/JavaScript (no framework)
-- **Concept Graph**: D3.js force-directed layout
-- **Storage**: localStorage (no database for hackathon)
+### Socratic Questioning
 
----
+Unlike generic hints, Podcastify analyzes the specific wrong answer you selected:
 
-## Cost per Episode
+**Traditional Hint**:
+> "Think about what happens in the light-dependent reactions."
 
-- **LLM (Gemini Flash)**: $0.00 (free tier)
-- **TTS (Chatterbox)**: $0.00 (open-source)
-- **Total**: **FREE** 🎉
+**Podcastify Socratic Hint (Level 1)**:
+> You selected "The Calvin cycle produces oxygen" - but where in the process does oxygen actually come from? What molecule gets split during photosynthesis?
 
----
+**Level 2**:
+> Your answer suggests oxygen comes from carbon fixation, but oxygen is actually released during water photolysis in Photosystem II. What would this mean for when oxygen appears?
 
-## Implementation Checklist
+**Level 3**:
+> The Calvin cycle uses ATP and NADPH but doesn't produce oxygen. Oxygen is released when water molecules are split in the light reactions (around timestamp 1:23). This happens BEFORE the Calvin cycle.
 
-See [`docs/MVP_0_IMPLEMENTATION_CHECKLIST.md`](docs/MVP_0_IMPLEMENTATION_CHECKLIST.md) for detailed feature breakdown and time allocations.
+### Research-Backed Principles
 
----
-
-## Key Documentation
-
-1. **HACKATHON_STRATEGY_FINAL.md** - Complete 12-hour implementation plan
-2. **LEARNING_SCIENCE_CROSSREFERENCE.md** - Research-backed learning principles
-3. **PROJECT_VISION.md** - Why we're building this, NotebookLM differentiation
-4. **ZPD_ADAPTIVE_LEARNING_PRINCIPLES.md** - Zone of Proximal Development theory
+- **Active Recall**: Retrieval practice vs passive review (54% retention boost - Roediger 2011)
+- **Graduated Hints**: Scaffolded support within Zone of Proximal Development
+- **Dual Coding**: Audio + visual concept map (89% better recall - Paivio 1990)
+- **Metacognitive Prompts**: Wrong answer analysis promotes self-reflection
 
 ---
 
-## Success Criteria
+## 🔧 API Endpoints
 
-✅ Must demonstrate this flow perfectly:
-- Upload document → Generate podcast in 30-60 seconds
-- Interactive concept graph with 8-12 concepts
-- Audio with 2-3 "pause and predict" moments
-- Click concept → jump to timestamp
-- Live transcript with auto-highlighting
-- Struggle detection with intervention
-- Post-episode quiz with immediate feedback
+### Core Endpoints
 
----
+```
+POST /api/upload              # Upload PDF/text document
+POST /api/upload/text         # Upload pasted text
+POST /api/generate            # Generate podcast from session
+GET  /api/audio/{filename}    # Serve generated audio
+```
 
-## Development Timeline
+### Quiz Endpoints
 
-**Total: 12 hours**
-
-1. Document Upload (90 min) - Hours 0-1.5
-2. Enhanced Dialogue Generation (120 min) - Hours 1.5-3.5
-3. Interactive Concept Graph (150 min) - Hours 3.5-6
-4. Enhanced Audio Player (90 min) - Hours 6-7.5
-5. Live Transcript (75 min) - Hours 7.5-8.75
-6. Quiz System (150 min) - Hours 8.75-11.25
-7. Polish & Integration (60 min) - Hours 11.25-12
+```
+POST /api/quiz/generate       # Generate quiz from session
+POST /api/quiz/submit-answer  # Submit answer, get Socratic hints
+POST /api/quiz/get-hint       # Request specific hint level
+POST /api/quiz/navigate-question  # Previous/next question
+```
 
 ---
 
-## Troubleshooting
+## 💡 Development
 
-### "ModuleNotFoundError"
-Make sure you're in the `backend/` directory with activated venv:
+### Running in Development
+
 ```bash
 cd backend
 source venv/bin/activate
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8001
 ```
 
-### "401 Unauthorized from Gemini"
-Check your API key in `.env` (no quotes):
+### Environment Variables
+
 ```bash
+# Required
+GEMINI_API_KEY=your_gemini_api_key
+
+# TTS Configuration
+PARLER_TTS_URL=http://your-ngrok-url  # Chatterbox API endpoint
+
+# Optional
+LOG_LEVEL=INFO
+```
+
+### Key Configuration Files
+
+- `backend/app/core/config.py` - Environment configuration
+- `backend/app/core/logging_config.py` - Structured logging
+- `backend/docker-compose.yml` - Container orchestration
+
+---
+
+## 📊 Cost per Episode
+
+- **LLM (Gemini 2.5 Flash)**: ~$0.001 per episode (free tier: 1,500 requests/day)
+- **TTS (Parler via Chatterbox)**: $0.00 (open-source, self-hosted)
+- **Total**: ~$0.001 per episode 🎉
+
+---
+
+## 🐛 Troubleshooting
+
+### Server won't start
+```bash
+# Kill existing process on port 8001
+lsof -ti:8001 | xargs kill -9
+```
+
+### Gemini API errors
+```bash
+# Check API key format (no quotes in .env)
 GEMINI_API_KEY=AIzaSy...  # ✅ Correct
 ```
 
-### Server won't start
-Check if port 8000 is available:
+### TTS connection issues
+- Verify Chatterbox is running: Visit ngrok URL in browser
+- Check PARLER_TTS_URL in `.env` includes full protocol
+
+### Quiz generation fails
+- Ensure document was uploaded successfully (check session ID)
+- Verify concepts were extracted (check backend logs)
+- Gemini may occasionally return malformed JSON - retry generation
+
+---
+
+## 🚀 Deployment
+
+### Docker (Recommended)
+
 ```bash
-lsof -ti:8000 | xargs kill -9  # Kill existing process
+cd backend
+docker-compose up -d
 ```
 
----
+### Manual Deployment
 
-## Next Steps
-
-After completing MVP_0:
-1. ✅ Test with 5-10 users
-2. ✅ Gather feedback on interactivity
-3. ➡️ Start MVP_1 (12 hours): Visual dual coding, episode series, embedded checkpoints
-
-See parent Podcastify project for full roadmap (3-12 months).
+1. Configure reverse proxy (nginx/Caddy)
+2. Set up SSL certificates
+3. Run with production ASGI server:
+   ```bash
+   gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker
+   ```
 
 ---
 
-**Status**: MVP_0 - 12-Hour Hackathon Build
-**Last Updated**: November 15, 2025
-**Next Milestone**: Complete all 6 core features in 12 hours
+## 🎯 Roadmap
+
+### Current Features ✅
+- Document upload and processing
+- Two-person podcast generation
+- Concept graph visualization
+- Synchronized transcript
+- Socratic quiz system
+
+### Planned Features 🔜
+- User accounts and progress tracking
+- Spaced repetition scheduling
+- Multi-document podcasts
+- Custom voice profiles
+- Mobile responsive design
+- Offline mode
+
+---
+
+## 📄 License
+
+MIT License - See LICENSE file for details
+
+---
+
+## 🙏 Acknowledgments
+
+- **NotebookLM** - Inspiration for Audio Overview format
+- **Google Gemini** - Powerful LLM for content generation
+- **Parler TTS** - High-quality open-source voice synthesis
+- **Learning Science Research** - VanLehn (2011), Roediger (2011), Paivio (1990)
+
+---
+
+## 📞 Contact
+
+- **GitHub**: [@yash016](https://github.com/yash016)
+- **Project**: [Podcastify](https://github.com/yash016/Podcastify)
+
+---
+
+**Built with research-backed learning science | Making education accessible through audio** 🎧
